@@ -45,6 +45,9 @@ def index():
     category_counts = df.iloc[:, 4:].sum().values
     category_names = df.iloc[:, 4:].columns
 
+    correlation_values = df.corr().values
+
+
     # create visuals
     graphs = [
         {
@@ -81,6 +84,21 @@ def index():
                 },
                 'xaxis': {
                     'title': "Category"
+                }
+            }
+        },
+
+        {
+            'data': [
+                Heatmap(
+                    x=category_names,
+                    y=category_names,
+                    z=correlation_values
+                )
+            ],
+
+            'layout': {
+                'title': 'Feature correlation heatmap'
                 }
             }
         }

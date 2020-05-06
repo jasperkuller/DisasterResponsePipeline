@@ -74,9 +74,14 @@ def build_model():
             ('starting_verb', StartingVerbExtractor())
         ])),
 
-        ('clf', MultiOutputClassifier(AdaBoostClassifier(n_estimators=40)))
+        ('clf', MultiOutputClassifier(AdaBoostClassifier()))
     ])
-    return pipeline
+
+    parameters = {'clf__estimator__n_estimators': [10, 20, 30, 40, 50]}
+
+    model = GridSearchCV(pipeline, param_grid=parameters)
+
+    return model
 
 
 def evaluate_model(model, X_test, y_test, category_names):
